@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Web Basics</title>
+    <style href="style.css"></style>
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,700" rel="stylesheet">
+
+    <script src="https://use.fontawesome.com/939e9dd52c.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+
+
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-storage-compat.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyABf2nvuAQzKibD7VFafdWtd9RP8qrrRnE",
+            authDomain: "acthreevity.firebaseapp.com",
+            projectId: "acthreevity",
+            storageBucket: "acthreevity.appspot.com",
+            messagingSenderId: "579982076150",
+            appId: "1:579982076150:web:14a50aa66a9419672824d7",
+            measurementId: "G-5FL0VCQ1HP"
+        };
+        const firebaseApp = firebase.initializeApp(firebaseConfig);
+        const db = firebaseApp.firestore();
+        const auth = firebaseApp.auth();
+        var docData = {
+            stringExample: "Hello world!",
+            booleanExample: true,
+            numberExample: 3.14159265,
+            dateExample: firebase.firestore.Timestamp.fromDate(new Date("December 10, 1815")),
+            arrayExample: [5, true, "hello"],
+            nullExample: null,
+            objectExample: {
+                a: 5,
+                b: {
+                    nested: "foo"
+                }
+            }
+        };
+        // db.collection("RequestEvents").doc("one").set(docData).then(() => {
+        //     console.log("Document successfully written!");
+        // });
+        var RequestEventsRef = db.collection("RequestEvents");
+        RequestEventsRef
+            .get()
+            .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    // doc.data() is never undefined for query doc snapshots
+                    console.log(doc.id);
+                });
+            })
+            .catch((error) => {
+                console.log("Error getting documents: ", error);
+            });
+
+
+
+        window.addEventListener('DOMContentLoaded', (event) => {
+            var uploader = document.getElementById('uploader');
+            var fileButton = document.getElementById('fileButton');
+            fileButton.addEventListener('change', function (e) {
+                var file = e.target.files[0];
+                var storageRef = firebase.storage().ref('img/file1');
+                var task = storageRef.put(file);
+                task.on('state_changed', function progress(snapshot) {
+                    var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    uploader.value = percentage;
+
+                }, function error(err) {
+                    console.log("Error");
+
+                }, function complete() {
+                    console.log("Hello");
+                    task.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                        console.log('File available at', downloadURL);
+                    });
+                });
+            });
+        });
+
+    </script>
+</head>
+
+<body>
+
+
+    <div class="container">
+        <br>
+        <h1>Event Organizer Portal</h1>
+        <p>Maitree Hirunteeyakul</p>
+        <p>Event: Test Event</p>
+        <h5>Status: Pending</h5>
+        
+        <br>
+        <h3>Pre-Event</h3>
+        <div class="row">
+            <div class="col">
+            <h5>Poster</h5>
+            <p class="">&nbspStatus: Await for Review</p>
+        </div>
+        <div class="col">
+            <progress id="uploader" value="0" max="100">0%</progress>
+            <input type="file" id="fileButton" value="upload" />
+        </div>
+        </div>
+    </div>
+
+
+
+</body>
+
+</html>

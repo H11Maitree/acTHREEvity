@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Web Basics</title>
+
+    
+
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-storage-compat.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyABf2nvuAQzKibD7VFafdWtd9RP8qrrRnE",
+            authDomain: "acthreevity.firebaseapp.com",
+            projectId: "acthreevity",
+            storageBucket: "acthreevity.appspot.com",
+            messagingSenderId: "579982076150",
+            appId: "1:579982076150:web:14a50aa66a9419672824d7",
+            measurementId: "G-5FL0VCQ1HP"
+        };
+        const firebaseApp = firebase.initializeApp(firebaseConfig);
+        const db = firebaseApp.firestore();
+        const auth = firebaseApp.auth();
+        var RequestEventsRef = db.collection("RequestEvents");
+
+        window.addEventListener('DOMContentLoaded', (event) => {
+            RequestEventsRef
+                .get()
+                .then((querySnapshot) => {
+                    querySnapshot.forEach((doc) => {
+                        // doc.data() is never undefined for query doc snapshots
+                        console.log(doc.id);
+                    });
+                })
+                .catch((error) => {
+                    console.log("Error getting documents: ", error);
+                });
+
+        });
+
+    </script>
+</head>
+
+<body>
+    <nav class="navbar navbar-light navbar-expand-lg navbar-light " style="background-color: #acdcff;">
+        <a class="navbar-brand px-5" href="#">AcTHREEvity</a>
+        <button class="navbar-toggler mx-5" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon" ></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link active" href="#">Events <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="#">Hosting</a>
+                <a class="nav-item nav-link" href="#">Procedures</a>
+                <a class="nav-item nav-link disabled" href="#">FAQ</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container" style="max-width: 750px;">
+
+        <div>
+            <br>
+            <h1>Upcoming Event</h1><br>
+            <div id="eventlist">
+                <div id="00001" class="px-5">
+                    <h2>San Traf</h2>
+                    <p>Lopern Sedo Jesitay, Onia lamba dinawoka.</p>
+                    <img class="center" style="width: 400px; height: 560px; object-fit:contain;"
+                        src="https://d1csarkz8obe9u.cloudfront.net/themedlandingpages/tlp_hero_poster-maker-7bde0bc953786a062bbd5b6dacedf5b8-1560848973.jpg">
+                    <br>
+                    <a class="btn btn-primary" style="float: right;" href="#">Register</a>
+                    <br>
+                </div>
+            </div>
+        </div>
+        <br>
+        
+    </div>
+    <footer style="background-color: #dadada;" >
+          <div class="container" style="max-width: 750px;">
+        <br>
+        Copyright 2023.
+        <br>
+        &nbsp;
+    </div>  
+    </footer>
+</body>
+
+</html>
