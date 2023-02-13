@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Firebase Web Basics</title>
+    <title>AcTHREEvity</title>
 
 
 
@@ -48,11 +48,15 @@
                         $("#eventlist").append(
                             `<div id="${doc.id}" class="px-5">
                                 <h2>${doc.data().title}</h2>
+                                <h5>${doc.data().date}</h5>
                                 <p>${doc.data().description}</p>
+                                <a href="${doc.data().imgsrc}">
+                                    
                                 <img class="center" style="max-height: 500px;"
                                     src="${doc.data().imgsrc}">
+                                    <\a>
                                 <br>
-                                <a class="btn btn-primary" style="float: right;" href="#">Register</a>
+                                <a class="btn btn-primary" style="float: right;" href="${doc.data().link}">Register</a>
                                 <br>
                                 <br>
                                 <hr class="solid">
